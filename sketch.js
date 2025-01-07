@@ -13,6 +13,7 @@ let vhc = 0;
 let rot = 0;
 let theta = [];
 let radius = [];
+let textRadius = [];
 
 // change opacity
 let a = 0;
@@ -29,7 +30,7 @@ function preload() {
 function setup() {
   createCanvas(innerWidth, innerHeight);
   averageTemps = table.getColumn(13) // get the variation from the average temp for 1880 to 2023 
-  currentYear = table.getColumn(1)
+  currentYear = table.getColumn(0)
   // find the lowest value
   minTemp = min(averageTemps)
   // find the highest value
@@ -44,9 +45,11 @@ function setup() {
   // start Midi
   setupController();
   let r = height * 0.25
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 140; i++) {
     radius.push(averageTemps[i] * r)
+    textRadius.push(r + 2)
     theta.push((2 * Math.PI / 10) * i)
+    
   }
 
 }
@@ -66,7 +69,7 @@ function draw() {
   fill(0)
   stroke(255);
   strokeWeight(10)
-  circle(0, 0, r * 2);
+  // circle(0, 0, r * 2);
 
 
   noStroke();
@@ -86,10 +89,16 @@ function draw() {
   strokeWeight(1);
         stroke(255);
 
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 140; i++) {
     x = cos(theta[i] + rot) * radius[i];
     y = sin(theta[i] + rot) * radius[i];
+    tx = cos(theta[i] + rot) * textRadius[i];
+    ty = sin(theta[i] + rot) * textRadius[i];
     circle(x, y, circleSize)
+    stroke(255)
+    strokeWeight(1)
+
+    text(currentYear[i], tx, ty)
   //     //   creates circles for data points
   }
 
