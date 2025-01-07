@@ -20,7 +20,8 @@ let a = 0;
 let circleSize = 10;
 // gaussian
 let gaussianRandom = 0;
-
+// rotInc = Speed
+let circleSpeed = 0.0025;
 
 function preload() {
   table = loadTable("data/data.csv", "csv", "header");
@@ -80,15 +81,15 @@ function draw() {
   // controls the length of each line drawn
   let len = 100;
   // how much to advance rotation of the circle by each frame
-  let rotInc = 0.0025;
+  let rotInc = circleSpeed;
   fill(lerpColor(coldColour, hotColour, 0.5, a))
-
+ 
   strokeWeight(1);
-        stroke(255);
+  stroke(255);
 
   for (let i = 0; i < 10; i++) {
-    x = cos(theta[i] + rot) * radius[i];
-    y = sin(theta[i] + rot) * radius[i];
+    x = cos(theta[i] + rot) * radius[i] + randomGaussian(1, gaussianRandom);
+    y = sin(theta[i] + rot) * radius[i] + randomGaussian(1, gaussianRandom);
     circle(x, y, circleSize)
   //     //   creates circles for data points
   }
@@ -132,7 +133,7 @@ function allCC(e) {
     }
     case 37: {
       //slider 2
-      circleSize = 200 * e.value;
+      circleSize = 200 * e.value + 10;
       break;
     }
     case 38: {
@@ -142,7 +143,7 @@ function allCC(e) {
     }
     case 39: {
       //slider 4
-
+      circleSpeed = 1 * e.value;
       break;
     }
   }
