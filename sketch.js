@@ -47,19 +47,22 @@ let dCount = 1;
 
 function draw() {
   let r = height * 0.25
+
   background(0);
+
   textSize(36);
   fill(255)
   noStroke();
   text(HEADERTEXT, width / 2, TOPMARGIN / 2);
+
   translate(width / 2, height / 2);
+
   fill(0)
   stroke(255);
   strokeWeight(10)
-  
   circle(0, 0, r * 2);
-  // draw header text
-  // the thickness of each line drawn
+
+
   noStroke();
   // draw a circle
   // define radius
@@ -72,7 +75,7 @@ function draw() {
   let len = 100;
   // how much to advance rotation of the circle by each frame
   let rotInc = 0.0025;
-  fill(lerpColor(coldColour, hotColour, 0))
+  fill(lerpColor(coldColour, hotColour, 0.5))
 
 
   // we want a circle with a number of points that matches the temp data
