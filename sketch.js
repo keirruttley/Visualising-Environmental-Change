@@ -30,7 +30,7 @@ function preload() {
 
 function setup() {
   createCanvas(innerWidth, innerHeight);
-  averageTemps = table.getColumn(13) // get the variation from the average temp for 1880 to 2023 
+  averageTemps = table.getRow(5) // get the variation from the average temp for 1880 to 2023 
   currentYear = table.getColumn(0)
   // find the lowest value
   minTemp = min(averageTemps)
@@ -95,6 +95,8 @@ function draw() {
     y = sin(theta[i] + rot) * radius[i] + randomGaussian(1, gaussianRandom);
     tx = cos(theta[i] + rot) * textRadius[i];
     ty = sin(theta[i] + rot) * textRadius[i];
+    // noStroke();
+    // fill(255);
     circle(x, y, circleSize)
     stroke(255)
     strokeWeight(1)
