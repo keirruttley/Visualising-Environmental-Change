@@ -14,9 +14,18 @@ let rot = 0;
 let theta = [];
 let radius = [];
 
+// change opacity
+let a = 0;
+//change size
+let circleSize = 10;
+// gaussian
+let gaussianRandom = 0;
+
+
 function preload() {
   table = loadTable("data/data.csv", "csv", "header");
 }
+
 function setup() {
   createCanvas(innerWidth, innerHeight);
   averageTemps = table.getColumn(13) // get the variation from the average temp for 1880 to 2023 
@@ -26,8 +35,8 @@ function setup() {
   // find the highest value
   maxTemp = max(averageTemps)
   // define 2 colours that will form either end of a range of possible colurs
-  hotColour = color(255, 0, 0)
-  coldColour = color(0, 0, 255)
+  hotColour = color(255, 0, 0, a);
+  coldColour = color(0, 0, 255, a);
   // use squared ends when draing strokes
   strokeCap(SQUARE)
   // centre text
@@ -41,9 +50,6 @@ function setup() {
   }
 
 }
-
-const temps = [averageTemps];
-let dCount = 1;
 
 function draw() {
   let r = height * 0.25
@@ -75,37 +81,15 @@ function draw() {
   let len = 100;
   // how much to advance rotation of the circle by each frame
   let rotInc = 0.0025;
-  fill(lerpColor(coldColour, hotColour, 0.5))
+  fill(lerpColor(coldColour, hotColour, 0.5, a))
 
+  strokeWeight(1);
+        stroke(255);
 
-  // we want a circle with a number of points that matches the temp data
-  // loop from 0 to TAU using the available data to define an increment to the angle theta ie  +=TAU/(averageTemps.length-1)
-  // however, because we are progressively rotating the circle
-  // we use an offset rot to control the start and end of the loop
-  // for (let theta = rot; theta < TAU + rot; theta += TAU / (1)) {
-    
-  //   for (let i = 0; i < 10; i++) {
-  //     let xValues = [cos(theta) * (averageTemps[i] * r) + width / 2];
-  //   }
-  //   for (let l = 0; l < 10; l++) {
-  //   let yValues = [sin(theta) * (averageTemps[l] * r) + height / 2];
-  //   }
-  //   for (let j = 0; j < 10; j++) {
-  //     setTimeout(function () {
-  //     //   // calculate a value from 0 tod on the current temp value compared to precalculated min and max temp values
-      
-  //     // x = cos(theta) * delta + width / 2;
-  //     // y = sin(theta) * delta + height / 2;
-  //     //   
-  //     circle(xValues[j], yValues[l], 20, 20)
-  //     //   creates circles for data points
-  //     }, j * 500);
-  //   }
-  // }
   for (let i = 0; i < 10; i++) {
     x = cos(theta[i] + rot) * radius[i];
     y = sin(theta[i] + rot) * radius[i];
-    circle(x, y, 20, 20)
+    circle(x, y, circleSize)
   //     //   creates circles for data points
   }
 
@@ -138,17 +122,27 @@ function allCC(e) {
       break;
     }
     case 36: {
-      vhv = 255 * e.value;
-      hotColour = color(vhc, 0, 0)
+      //slider 1
+      // the should change the alpha 
+      a = 255 * e.value;
+      // define 2 colours that will form either end of a range of possible colurs
+      hotColour = color(255, 0, 0, a);
+      coldColour = color(0, 0, 255, a);
       break;
     }
     case 37: {
+      //slider 2
+      circleSize = 200 * e.value;
       break;
     }
     case 38: {
+      //slider 3
+      gaussianRandom = 50 * e.value;
       break;
     }
     case 39: {
+      //slider 4
+
       break;
     }
   }
