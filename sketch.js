@@ -8,9 +8,15 @@ let averageTemps;
 let currentYear;
 let minTemp, maxTemp;
 let hotColour, coldColour;
-let vhc = 0;
 // how much to rotate the circle by each frame
 let rot = 0;
+// change opacity
+let a = 0;
+//change size
+let circleSize = 10;
+// gaussian
+let gaussianRandom = 0;
+
 
 function preload() {
   table = loadTable("data/data.csv", "csv", "header");
@@ -23,9 +29,9 @@ function setup() {
   minTemp = min(averageTemps)
   // find the highest value
   maxTemp = max(averageTemps)
-  // define 2 colours that will form either end of a range of possible colurs
-  hotColour = color(255, 0, 0)
-  coldColour = color(0, 0, 255)
+
+  hotColour = color(255, 0, 0, a);
+  coldColour = color(0, 0, 255, a);
   // use squared ends when draing strokes
   strokeCap(SQUARE)
   // centre text
@@ -34,8 +40,6 @@ function setup() {
   setupController();
 }
 
-const temps = [averageTemps];
-let dCount = 1;
 
 function draw() {
   let r = height * 0.25
@@ -61,7 +65,7 @@ function draw() {
   let len = 100;
   // how much to advance rotation of the circle by each frame
   let rotInc = 0.0025;
-  fill(lerpColor(coldColour, hotColour, 0))
+  fill(lerpColor(coldColour, hotColour, 0, a));
 
   // we want a circle with a number of points that matches the temp data
   // loop from 0 to TAU using the available data to define an increment to the angle theta ie  +=TAU/(averageTemps.length-1)
@@ -70,17 +74,19 @@ function draw() {
   for (let theta = rot; theta < TAU + rot; theta += TAU / (1)) {
     for (let j = 0; j < 10; j++) {
       setTimeout(function () {
-      //   // calculate a value from 0 to 1 based on the current temp value compared to precalculated min and max temp values
-      let delta = (averageTemps[j+1] * r)
-      //   // use trig to calculate Cartesian coords of circle 
-      x = cos(theta) * delta + width / 2;
-      y = sin(theta) * delta + height / 2;
-      //   // use lerpColour to derive a colour value proportionally between cold and hot colours
-      // stroke(lerpColor(coldColour, hotColour, delta))
-      //   // extend a line from the edge of the circle inwards/outwards at a length relating to the temp data
-      circle(x, y, 20, 20)
-      //   // increment the index used to access the correct temp data
-      }, j * 3000);
+        //   // calculate a value from 0 to 1 based on the current temp value compared to precalculated min and max temp values
+        let delta = (averageTemps[j + 1] * r)
+        //   // use trig to calculate Cartesian coords of circle 
+        x = cos(theta) * delta + width / 2;
+        y = sin(theta) * delta + height / 2;
+        //   // use lerpColour to derive a colour value proportionally between cold and hot colours
+        // stroke(lerpColor(coldColour, hotColour, delta))
+        //   // extend a line from the edge of the circle inwards/outwards at a length relating to the temp data
+        strokeWeight(1);
+        stroke(255);
+        circle(x, y, circleSize, circleSize);
+        //   // increment the index used to access the correct temp data
+      }, j * 300);
 
     }
   }
@@ -112,17 +118,27 @@ function allCC(e) {
       break;
     }
     case 36: {
-      vhv = 255 * e.value;
-      hotColour = color(vhc, 0, 0)
+      //slider 1
+      // the should change the alpha 
+      a = 255 * e.value;
+      // define 2 colours that will form either end of a range of possible colurs
+      hotColour = color(255, 0, 0, a);
+      coldColour = color(0, 0, 255, a);
       break;
     }
     case 37: {
+      //slider 2
+      circleSize = 200 * e.value;
       break;
     }
     case 38: {
+      //slider 3
+      gaussianRandom = 50 * e.value;
       break;
     }
     case 39: {
+      //slider 4
+
       break;
     }
   }
