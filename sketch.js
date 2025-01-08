@@ -29,6 +29,8 @@ let months = [
   "Dec",
 ];
 
+
+
 // change opacity
 let a = 255;
 //change size
@@ -47,6 +49,7 @@ function setup() {
   averageTemps = table.getColumn(13) // get the variation from the average temp for 1880 to 2023 
   // currentMonth = table.getRow(0)
   // find the lowest value
+
   minTemp = min(averageTemps)
   // find the highest value
   maxTemp = max(averageTemps)
@@ -60,7 +63,8 @@ function setup() {
   // start Midi
   setupController();
   let r = height * 0.25
-  for (let i = 0; i < 10; i++) {
+  let year = 3
+  for (let i = (1 + (10 * year)); i < (12 + (10 * year)); i++) {
     radius.push(averageTemps[i] * r)
     textRadius.push(r + 2)
     theta.push((2 * Math.PI / 10) * i)
@@ -111,13 +115,14 @@ function draw() {
     // fill(255);
     circle(x, y, circleSize)
     ellipse(x, y)
-    stroke(255)
+    stroke(0)
     strokeWeight(1)
     fill(255)
     // rotate((theta[i]) * (PI/2)/6)
-    // rotate(tan(x/y))
-    textAlign(CENTER, CENTER)
+    // rotate(tan(-x/y));
+    // textAlign(CENTER, CENTER)
     text(months[i], tx, ty)
+    // rotate(-(tan(-x/y)));
     pop();
     //     //   creates circles for data points
   }
