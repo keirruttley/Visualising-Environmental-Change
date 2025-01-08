@@ -4,7 +4,7 @@ https://data.giss.nasa.gov/gistemp/
 */
 const HEADERTEXT = "Annual Global Temperature Fluctuation 1880 - 2023";
 const TOPMARGIN = 52;
-let averageTemps;
+let averageTemps = [];
 // let currentMonth;
 let minTemp, maxTemp;
 let hotColour, coldColour;
@@ -46,9 +46,27 @@ function preload() {
 
 function setup() {
   createCanvas(innerWidth, innerHeight);
-  averageTemps = table.getColumn(13) // get the variation from the average temp for 1880 to 2023 
+  for (let rowI = 0; rowI < 40; rowI++) {
+    for (let colI = 0; colI < 12; colI++) {
+      averageTemps.push(table.get(rowI, colI));
+    }
+  }
+  // averageTemps.push(table.get(38, 17));
+  print(averageTemps)
+  // get the variation from the average temp for 1880 to 2023 
   // currentMonth = table.getRow(0)
   // find the lowest value
+  // var t = averageTemps.length;
+  // while (t--) {
+  //   // averageTemps.splice((t + 1) * 1 - 1, 1);
+  //   // averageTemps.splice((t + 1) * 13 - 1, 1);
+  //   // averageTemps.splice((t + 1) * 14 - 1, 1);
+  //   // averageTemps.splice((t + 1) * 15 - 1, 1);
+  //   // averageTemps.splice((t + 1) * 16 - 1, 1);
+  //   // averageTemps.splice((t + 1) * 17 - 1, 1);
+  //   // averageTemps.splice((t + 1) * 18 - 1, 1);
+  // }
+  //  console.log(averageTemps);
 
   minTemp = min(averageTemps)
   // find the highest value
@@ -63,18 +81,27 @@ function setup() {
   // start Midi
   setupController();
   let r = height * 0.25
-  let year = 3
-  for (let i = (1 + (10 * year)); i < (12 + (10 * year)); i++) {
+  let year = 0
+  for (let i = (0 + (10 * year)); i < (9 + (10 * year)); i++) {
     radius.push(averageTemps[i] * r)
     textRadius.push(r + 2)
     theta.push((2 * Math.PI / 10) * i)
-
   }
-
+  // calculate();
 }
 
+// function calculate() {
+// for (let i = (0 + (10 * year)); i < (9 + (10 * year)); i++) {
+//   radius.push(averageTemps[i] * r)
+//   textRadius.push(r + 2)
+//   theta.push((2 * Math.PI / 10) * i)
+// }
+// }
+
+
+
 function draw() {
-  background(0,15);
+  background(0, 15);
 
   textSize(36);
   fill(255)
@@ -114,7 +141,7 @@ function draw() {
     // noStroke();
     // fill(255);
     circle(x, y, circleSize)
-    
+
     ellipse(x, y)
     stroke(0)
     strokeWeight(1)
@@ -219,6 +246,6 @@ function allNoteOn(e) {
 }
 
 class Particle {
-  
+
 
 }
