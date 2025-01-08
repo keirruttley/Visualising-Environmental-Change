@@ -110,10 +110,11 @@ function draw() {
     // noStroke();
     // fill(255);
     circle(x, y, circleSize)
+    
     ellipse(x, y)
-    stroke(255)
+    stroke(0)
     strokeWeight(1)
-    fill(255)
+    fill(225)
     // rotate((theta[i]) * (PI/2)/6)
     // rotate(tan(x/y))
     textAlign(CENTER, CENTER)
@@ -210,4 +211,9 @@ function allNoteOn(e) {
       break;
     }
   }
+}
+
+class Particle {
+  
+
 }
