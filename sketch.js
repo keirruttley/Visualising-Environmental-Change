@@ -122,7 +122,7 @@ function draw() {
     strokeWeight(1)
     fill(255)
     // rotate((theta[i]) * (PI/2)/6)
-    rotate(tan(x/y))
+    // rotate(tan(x/y))
     textAlign(CENTER, CENTER)
     text(months[i], tx, ty)
     pop();
