@@ -16,7 +16,7 @@ let radius = [];
 let textRadius = [];
 
 // change opacity
-let a = 0;
+let a = 255;
 //change size
 let circleSize = 10;
 // gaussian
@@ -30,7 +30,7 @@ function preload() {
 
 function setup() {
   createCanvas(innerWidth, innerHeight);
-  averageTemps = table.getRow(5) // get the variation from the average temp for 1880 to 2023 
+  averageTemps = table.getColumn(13) // get the variation from the average temp for 1880 to 2023 
   currentYear = table.getColumn(0)
   // find the lowest value
   minTemp = min(averageTemps)
@@ -50,15 +50,13 @@ function setup() {
     radius.push(averageTemps[i] * r)
     textRadius.push(r + 2)
     theta.push((2 * Math.PI / 10) * i)
-    
+
   }
 
 }
 
 function draw() {
-  let r = height * 0.25
-
-  background(0);
+  background(0,15);
 
   textSize(36);
   fill(255)
@@ -74,22 +72,18 @@ function draw() {
 
 
   noStroke();
-  // draw a circle
-  // define radius
-  // let r = height * 0.25
   // coords of each point
   let x, y;
-  // an index used to access the relevant temp data
-  let i = 0;
-  // controls the length of each line drawn
-  let len = 100;
   // how much to advance rotation of the circle by each frame
   let rotInc = circleSpeed;
+  //colour based on temperature
   fill(lerpColor(coldColour, hotColour, 0.5, a))
- 
+
+  //stroke for circles
   strokeWeight(1);
   stroke(255);
 
+  //Draws circles
   for (let i = 0; i < 10; i++) {
     x = cos(theta[i] + rot) * radius[i] + randomGaussian(1, gaussianRandom);
     y = sin(theta[i] + rot) * radius[i] + randomGaussian(1, gaussianRandom);
@@ -98,13 +92,10 @@ function draw() {
     // noStroke();
     // fill(255);
     circle(x, y, circleSize)
-    stroke(255)
-    strokeWeight(1)
+    ellipse(x, y)
 
     text(currentYear[i], tx, ty)
-  //     //   creates circles for data points
   }
-
 
   // once the circle has been rendered, increment the rotation value
   // no need to return rot to zero once TAU has been reached 
@@ -121,7 +112,6 @@ function allCC(e) {
   console.log('controller:', e.controller.number, 'value:', e.value);
   switch (e.controller.number) {
     case 32: {
-
       break;
     }
     case 33: {
@@ -135,8 +125,8 @@ function allCC(e) {
     }
     case 36: {
       //slider 1
-      // the should change the alpha 
-      a = 255 * e.value;
+      // Change the alpha 
+      a = 255 * e.value + 50; // + 50 so that opacity never goes to 0
       // define 2 colours that will form either end of a range of possible colurs
       hotColour = color(255, 0, 0, a);
       coldColour = color(0, 0, 255, a);
@@ -144,17 +134,20 @@ function allCC(e) {
     }
     case 37: {
       //slider 2
-      circleSize = 200 * e.value + 10;
+      //changes size of cirlce
+      circleSize = 200 * e.value + 10; // + 10 used so circle is always visible
       break;
     }
     case 38: {
       //slider 3
+      //Changes the distribution of circles
       gaussianRandom = 50 * e.value;
       break;
     }
     case 39: {
       //slider 4
-      circleSpeed = 1 * e.value;
+      //changes the speed of circles
+      circleSpeed = 0.025 * e.value + 0.0025;
       break;
     }
   }
