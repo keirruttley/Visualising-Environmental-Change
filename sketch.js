@@ -5,7 +5,7 @@ https://data.giss.nasa.gov/gistemp/
 const HEADERTEXT = "Annual Global Temperature Fluctuation 1880 - 2023";
 const TOPMARGIN = 52;
 let averageTemps;
-let currentYear;
+// let currentMonth;
 let minTemp, maxTemp;
 let hotColour, coldColour;
 let vhc = 0;
@@ -14,6 +14,20 @@ let rot = 0;
 let theta = [];
 let radius = [];
 let textRadius = [];
+let months = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
 
 // change opacity
 let a = 255;
@@ -31,7 +45,7 @@ function preload() {
 function setup() {
   createCanvas(innerWidth, innerHeight);
   averageTemps = table.getColumn(13) // get the variation from the average temp for 1880 to 2023 
-  currentYear = table.getColumn(0)
+  // currentMonth = table.getRow(0)
   // find the lowest value
   minTemp = min(averageTemps)
   // find the highest value
@@ -46,7 +60,7 @@ function setup() {
   // start Midi
   setupController();
   let r = height * 0.25
-  for (let i = 0; i < 140; i++) {
+  for (let i = 0; i < 10; i++) {
     radius.push(averageTemps[i] * r)
     textRadius.push(r + 2)
     theta.push((2 * Math.PI / 10) * i)
@@ -81,10 +95,14 @@ function draw() {
 
   //stroke for circles
   strokeWeight(1);
-  stroke(255);
+  // stroke(255);
 
   //Draws circles
   for (let i = 0; i < 10; i++) {
+    // rotate(0)
+    fill(lerpColor(coldColour, hotColour, 0.5, a))
+    stroke(lerpColor(coldColour, hotColour, 0.5, a))
+    push();
     x = cos(theta[i] + rot) * radius[i] + randomGaussian(1, gaussianRandom);
     y = sin(theta[i] + rot) * radius[i] + randomGaussian(1, gaussianRandom);
     tx = cos(theta[i] + rot) * textRadius[i];
@@ -93,8 +111,15 @@ function draw() {
     // fill(255);
     circle(x, y, circleSize)
     ellipse(x, y)
-
-    text(currentYear[i], tx, ty)
+    stroke(255)
+    strokeWeight(1)
+    fill(255)
+    // rotate((theta[i]) * (PI/2)/6)
+    // rotate(tan(x/y))
+    textAlign(CENTER, CENTER)
+    text(months[i], tx, ty)
+    pop();
+    //     //   creates circles for data points
   }
 
   // once the circle has been rendered, increment the rotation value
