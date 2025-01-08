@@ -39,6 +39,8 @@ let circleSize = 10;
 let gaussianRandom = 0;
 // rotInc = Speed
 let circleSpeed = 0.0025;
+// year change
+let yearButton = 0;
 
 function preload() {
   table = loadTable("data/data.csv", "csv", "header");
@@ -81,7 +83,7 @@ function setup() {
   // start Midi
   setupController();
   let r = height * 0.25
-  let year = 0
+  let year = yearButton
   for (let i = (0 + (10 * year)); i < (9 + (10 * year)); i++) {
     radius.push(averageTemps[i] * r)
     textRadius.push(r + 2)
@@ -184,7 +186,7 @@ function allCC(e) {
     case 36: {
       //slider 1
       // Change the alpha 
-      a = 255 * e.value + 50; // + 50 so that opacity never goes to 0
+      a = 255 * e.value + 20; // + 50 so that opacity never goes to 0
       // define 2 colours that will form either end of a range of possible colurs
       hotColour = color(255, 0, 0, a);
       coldColour = color(0, 0, 255, a);
@@ -211,6 +213,13 @@ function allCC(e) {
   }
 }
 
+
+// function changeButtonYear {
+//   let year = yearButton;
+//   let i = (10 * year); i < (10 + 10 * year);
+// } 
+
+
 /**
  * React to inputs from the bottom buttons on the controller
  * @param {Event} e 
@@ -220,32 +229,35 @@ function allNoteOn(e) {
   switch (e.data[1]) {
     case 40: {
       if (e.value) {
+        //button 1
+        yearButton = 0;
       } else {
       }
       break;
     }
     case 41: {
       if (e.value) {
+        //button 2
+        yearButton = 1;
       } else {
       }
       break;
     }
     case 42: {
       if (e.value) {
+        //button 3
+        yearButton = 2;
       } else {
       }
       break;
     }
     case 43: {
       if (e.value) {
+        //button 4
+        yearButton = 3;
       } else {
       }
       break;
     }
   }
-}
-
-class Particle {
-
-
 }
