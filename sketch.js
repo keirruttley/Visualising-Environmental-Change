@@ -76,7 +76,7 @@ function calculate() {
   radius = [] 
   textRadius = []
   theta = []
-  for (let i = (0 + (10 * year)); i < (12 + (10 * year)); i++) {
+  for (let i = (0 + (10 * year)); i < (120 + (10 * year)); i++) {
     radius.push(averageTemps[i] * r)
     textRadius.push(r + 2)
     theta.push((2 * Math.PI / 12) * i)
@@ -115,7 +115,7 @@ function draw() {
   // stroke(255);
 
   //Draws circles
-  for (let i = 0; i < 12; i++) {
+  for (let i = 0; i < 120; i++) {
     // rotate(0)
     fill(lerpColor(coldColour, hotColour, 0.5, a))
     stroke(lerpColor(coldColour, hotColour, 0.5, a))
