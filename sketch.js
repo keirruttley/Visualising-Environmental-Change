@@ -93,7 +93,7 @@ function calculate() {
     radius.push(averageTemps[i] * r)
     textRadius.push(textR + (r * 0.15))
     theta.push(((2 * Math.PI / 12) * i) * (0.25 * (Math.random() - 0.5)))
-    thetaT.push(((2 * Math.PI / 12) * i))
+    thetaT.push(((2 * Math.PI / 12) * i)) 
     delta.push(map(averageTemps[i], minTemp, maxTemp, 0, 1));
     // print(radius)
   }
@@ -141,7 +141,34 @@ function draw() {
   strokeWeight(1);
 
   //Draws circles
+  // for (let i = 0 + (10 * 1); i < 10 + (10 * 1); i++) {
+  //   // for (let is = 0 + (10 * year); is < 12 + (10 * year); is++) {
+  //     // rotate(0)
   
+  //     // rotVar = 0.25 * (Math.random() - 0.5);
+  //     // rot = 0 + rotVar;
+  //     // let a = 255;
+  //     let delta = map(averageTemps[i], minTemp, maxTemp, 0, 1)
+  //     // print(delta)
+  //     fill(lerpColor(coldColour, hotColour, delta, 255))
+  //     // stroke(lerpColor(coldColour, hotColour, delta, 255))
+  //     // fill (255, 255, 255, 200)
+  //     stroke (255, 255, 255, 200)
+  //     // push();
+  //     x = cos(theta[i] + rot) * radius[i] + randomGaussian(1, gaussianRandom);
+  //     y = sin(theta[i] + rot) * radius[i] + randomGaussian(1, gaussianRandom);
+  //     // noStroke();
+  //     // fill(255);
+  //     //Draw circle
+  //     circle(x, y, circleSize)
+  //     stroke(0)
+  //     strokeWeight(1)
+  //     fill(225)
+  //     // rotate(-(tan(-x/y)));
+  //     // pop();
+  //     // rotVar = 0;
+  //     // print("test")
+  //   }
   for (let i = 0; i < 120; i++) {
     // rotate(0)
 
@@ -175,36 +202,36 @@ function draw() {
     // rotate(-(tan(-x/y)));
     pop();
     // rotVar = 0;
-    for (let i = 0 + (12 * 1); i < 12 + (12 * 1); i++) {
-      // for (let is = 0 + (10 * year); is < 12 + (10 * year); is++) {
-        // rotate(0)
-    
-        // rotVar = 0.25 * (Math.random() - 0.5);
-        // rot = 0 + rotVar;
-        // let a = 255;
-        let delta = map(averageTemps[i], minTemp, maxTemp, 0, 1)
-        // print(delta)
-        fill(lerpColor(coldColour, hotColour, delta, 255))
-        stroke(lerpColor(coldColour, hotColour, delta, 255))
-        // fill (255, 255, 255, 200)
-        // stroke (255, 255, 255, 200)
-        // push();
-        x = cos(theta[i] + rot) * radius[i] + randomGaussian(1, gaussianRandom);
-        y = sin(theta[i] + rot) * radius[i] + randomGaussian(1, gaussianRandom);
-        // noStroke();
-        // fill(255);
-        //Draw circle
-        circle(x, y, circleSize)
-        stroke(0)
-        strokeWeight(1)
-        fill(225)
-        // rotate(-(tan(-x/y)));
-        // pop();
-        // rotVar = 0;
-        // print("test")
-      }
+
   }
+  for (let i = 0 + (12 * yearDial); i < 12 + (12 * yearDial); i++) {
+    // for (let is = 0 + (10 * year); is < 12 + (10 * year); is++) {
+      // rotate(0)
   
+      // rotVar = 0.25 * (Math.random() - 0.5);
+      // rot = 0 + rotVar;
+      // let a = 255;
+      let delta = map(averageTemps[i], minTemp, maxTemp, 0, 1)
+      // print(delta)
+      fill(lerpColor(coldColour, hotColour, delta, a))
+      // stroke(lerpColor(coldColour, hotColour, delta, 255))
+      // fill (255, 255, 255, 200)
+      stroke (255, 255, 255, 200)
+      // push();
+      x = cos(theta[i] + rot) * radius[i] + randomGaussian(1, gaussianRandom);
+      y = sin(theta[i] + rot) * radius[i] + randomGaussian(1, gaussianRandom);
+      // noStroke();
+      // fill(255);
+      //Draw circle
+      circle(x, y, circleSize)
+      stroke(0)
+      strokeWeight(1)
+      fill(225)
+      // rotate(-(tan(-x/y)));
+      // pop();
+      // rotVar = 0;
+      // print("test")
+    }
 
   // trot += rotInc;
   // once the circle has been rendered, increment the rotation value
