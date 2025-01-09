@@ -84,21 +84,26 @@ function setup() {
   setupController();
   let r = height * 0.25
   let year = yearButton
+  // for (let i = (0 + (10 * year)); i < (9 + (10 * year)); i++) {
+  //   radius.push(averageTemps[i] * r)
+  //   textRadius.push(r + 2)
+  //   theta.push((2 * Math.PI / 10) * i)
+  //}
+  calculate();
+}
+
+function calculate() {
+  let year = yearButton
+  r = height * 0.25
+  radius = [] 
+  textRadius = []
+  theta = []
   for (let i = (0 + (10 * year)); i < (9 + (10 * year)); i++) {
     radius.push(averageTemps[i] * r)
     textRadius.push(r + 2)
     theta.push((2 * Math.PI / 10) * i)
   }
-  // calculate();
 }
-
-// function calculate() {
-// for (let i = (0 + (10 * year)); i < (9 + (10 * year)); i++) {
-//   radius.push(averageTemps[i] * r)
-//   textRadius.push(r + 2)
-//   theta.push((2 * Math.PI / 10) * i)
-// }
-// }
 
 
 
@@ -154,7 +159,6 @@ function draw() {
     text(months[i], tx, ty)
     // rotate(-(tan(-x/y)));
     pop();
-    //     //   creates circles for data points
   }
 
   // once the circle has been rendered, increment the rotation value
@@ -214,11 +218,6 @@ function allCC(e) {
 }
 
 
-// function changeButtonYear {
-//   let year = yearButton;
-//   let i = (10 * year); i < (10 + 10 * year);
-// } 
-
 
 /**
  * React to inputs from the bottom buttons on the controller
@@ -231,6 +230,7 @@ function allNoteOn(e) {
       if (e.value) {
         //button 1
         yearButton = 0;
+        calculate();
       } else {
       }
       break;
@@ -239,6 +239,7 @@ function allNoteOn(e) {
       if (e.value) {
         //button 2
         yearButton = 1;
+        calculate();
       } else {
       }
       break;
@@ -247,6 +248,7 @@ function allNoteOn(e) {
       if (e.value) {
         //button 3
         yearButton = 2;
+        calculate();
       } else {
       }
       break;
@@ -255,6 +257,7 @@ function allNoteOn(e) {
       if (e.value) {
         //button 4
         yearButton = 3;
+        calculate();
       } else {
       }
       break;
