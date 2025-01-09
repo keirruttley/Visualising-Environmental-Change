@@ -53,22 +53,7 @@ function setup() {
       averageTemps.push(table.get(rowI, colI));
     }
   }
-  // averageTemps.push(table.get(38, 17));
   print(averageTemps)
-  // get the variation from the average temp for 1880 to 2023 
-  // currentMonth = table.getRow(0)
-  // find the lowest value
-  // var t = averageTemps.length;
-  // while (t--) {
-  //   // averageTemps.splice((t + 1) * 1 - 1, 1);
-  //   // averageTemps.splice((t + 1) * 13 - 1, 1);
-  //   // averageTemps.splice((t + 1) * 14 - 1, 1);
-  //   // averageTemps.splice((t + 1) * 15 - 1, 1);
-  //   // averageTemps.splice((t + 1) * 16 - 1, 1);
-  //   // averageTemps.splice((t + 1) * 17 - 1, 1);
-  //   // averageTemps.splice((t + 1) * 18 - 1, 1);
-  // }
-  //  console.log(averageTemps);
 
   minTemp = min(averageTemps)
   // find the highest value
@@ -82,13 +67,6 @@ function setup() {
   textAlign(CENTER, CENTER);
   // start Midi
   setupController();
-  let r = height * 0.25
-  let year = yearButton
-  // for (let i = (0 + (10 * year)); i < (9 + (10 * year)); i++) {
-  //   radius.push(averageTemps[i] * r)
-  //   textRadius.push(r + 2)
-  //   theta.push((2 * Math.PI / 10) * i)
-  //}
   calculate();
 }
 
@@ -98,10 +76,11 @@ function calculate() {
   radius = [] 
   textRadius = []
   theta = []
-  for (let i = (0 + (10 * year)); i < (9 + (10 * year)); i++) {
+  for (let i = (0 + (10 * year)); i < (12 + (10 * year)); i++) {
     radius.push(averageTemps[i] * r)
     textRadius.push(r + 2)
-    theta.push((2 * Math.PI / 10) * i)
+    theta.push((2 * Math.PI / 12) * i)
+    print(radius)
   }
 }
 
@@ -136,7 +115,7 @@ function draw() {
   // stroke(255);
 
   //Draws circles
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 12; i++) {
     // rotate(0)
     fill(lerpColor(coldColour, hotColour, 0.5, a))
     stroke(lerpColor(coldColour, hotColour, 0.5, a))
