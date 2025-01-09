@@ -87,7 +87,7 @@ function calculate() {
   theta = []
   for (let i = (0 + (10 * year)); i < (120 + (10 * year)); i++) {
     radius.push(averageTemps[i] * r)
-    textRadius.push(textR + 2)
+    textRadius.push(textR + (r * 0.15))
     theta.push(((2 * Math.PI / 12) * i)*(0.25 * (Math.random() - 0.5)))
     thetaT.push(((2 * Math.PI / 12) * i))
     // print(radius)
