@@ -2,7 +2,7 @@
 This template visualises average temperature changes since 1880
 https://data.giss.nasa.gov/gistemp/
 */
-const HEADERTEXT = "Annual Global Temperature Fluctuation 1880 - 2023";
+const HEADERTEXT = "Annual Global Temperature Fluctuation 1980 - 2019";
 const TOPMARGIN = 52;
 let averageTemps = [];
 // let currentMonth;
@@ -179,29 +179,13 @@ function draw() {
   fill(0)
 
   //time periods text
-  fill(150)
+  fill (255)
   text(timePeriods[0], 140, 150)
-  fill(150)
   text(timePeriods[1], 140, 190)
-  fill(150)
   text(timePeriods[2], 140, 230)
-  fill(150)
   text(timePeriods[3], 140, 270)
-
-  //decade text colour change on selection
-  if(decadeButton = 0){
-    fill(255);
-    text(timePeriods[0], 140, 150)
-  } else if(decadeButton = 1){
-    fill(255)
-    text(timePeriods[1], 140, 190)
-  } else if(decadeButton = 2) {
-    fill(255)
-    text(timePeriods[2], 140, 230)
-  } else{
-    fill(255)
-    text(timePeriods[3], 140, 270)
-  }
+  stroke(255)
+  line(40, 165 + (40 * decadeButton), 245, 165 + (40 * decadeButton))
 
   //exact year text
   fill(255)
