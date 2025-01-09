@@ -81,14 +81,15 @@ function setup() {
 }
 
 function calculate() {
-  let decade = decadeButton
+  // let decade = decadeButton
+  let decade = 3
   r = (height * circleDistance)
   textR = height * 0.25
   radius = []
   textRadius = []
   theta = []
   delta = [];
-  for (let i = (0 + (10 * decade)); i < (120 + (10 * decade)); i++) {
+  for (let i = (0 + (120 * decade)); i < (120 + (120 * decade)); i++) {
     radius.push(averageTemps[i] * r)
     textRadius.push(textR + (r * 0.15))
     theta.push(((2 * Math.PI / 12) * i) + (0.25 * (Math.random() - 0.5)))
