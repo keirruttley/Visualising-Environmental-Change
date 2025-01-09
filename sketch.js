@@ -9,8 +9,8 @@ let averageTemps = [];
 let minTemp, maxTemp;
 let hotColour, coldColour;
 let vhc = 0;
+let exactYear = 0
 // how much to rotate the circle by each frame
-// let rotVar = 0;
 let rot = 0;
 let trot = 0;
 let theta = [];
@@ -18,6 +18,7 @@ let thetaT = [];
 let radius = [];
 let delta = [];
 let textRadius = [];
+let stopDraw = 0;
 let months = [
   "Jan",
   "Feb",
@@ -33,9 +34,76 @@ let months = [
   "Dec",
 ];
 
-let tempZero = [
-  "0°C",
+//label for circles
+let tempDegree = [
+  "0°",
 ];
+
+//time period labels to be displayed
+let timePeriods = [
+  "1980 - 1989",
+  "1990 - 1999",
+  "2000 - 2009",
+  "2010 - 2019",
+];
+
+//time labels for 1980s
+let yearEighties = [
+  "1980",
+  "1981",
+  "1982",
+  "1983",
+  "1984",
+  "1985",
+  "1986",
+  "1987",
+  "1988",
+  "1989"
+]
+
+//time labels for 1990s
+let yearNineties = [
+  "1990",
+  "1991",
+  "1992",
+  "1993",
+  "1994",
+  "1995",
+  "1996",
+  "1997",
+  "1998",
+  "1999"
+]
+
+//time labels for 2000s
+let yearNoughties = [
+  "2000",
+  "2001",
+  "2002",
+  "2003",
+  "2004",
+  "2005",
+  "2006",
+  "2007",
+  "2008",
+  "2009",
+]
+
+//time labels for 2010s
+let yearTens = [
+  "2010",
+  "2011",
+  "2012",
+  "2013",
+  "2014",
+  "2015",
+  "2016",
+  "2017",
+  "2018",
+  "2019"
+]
+
+let decadeSelection = yearEighties;
 
 // change opacity
 let a = 255;
@@ -50,7 +118,6 @@ let decadeButton = 0;
 let yearDial = 0;
 // distance of where the circles place is expanded
 let circleDistance = 0.25
-
 
 function preload() {
   table = loadTable("data/data.csv", "csv", "header");
@@ -78,12 +145,14 @@ function setup() {
   setupController();
   calculate();
   // selectDraw();
+
+  draw();
 }
 
+//Calculate function
 function calculate() {
-  // let decade = decadeButton
-  let decade = 3
-  r = (height * circleDistance) 
+  let decade = decadeButton;
+  r = (height * circleDistance)
   textR = height * 0.25
   radius = []
   textRadius = []
@@ -91,14 +160,11 @@ function calculate() {
   delta = [];
   for (let i = (0 + (120 * decade)); i < (120 + (120 * decade)); i++) {
     radius.push(averageTemps[i] * r)
-    textRadius.push(textR + (r * 0.15))
+    textRadius.push(textR + ((r * 0.60)))
     theta.push(((2 * Math.PI / 12) * i) + (0.25 * (Math.random() - 0.5)))
     thetaT.push(((2 * Math.PI / 12) * i))
     delta.push(map(averageTemps[i], minTemp, maxTemp, 0, 1));
-    // print(radius)
   }
-  print(delta)
-  draw();
 }
 
 
@@ -110,26 +176,55 @@ function draw() {
   fill(255)
   noStroke();
   text(HEADERTEXT, width / 2, TOPMARGIN / 2);
+  fill(0)
+
+  //time periods text
+  fill(150)
+  text(timePeriods[0], 140, 150)
+  fill(150)
+  text(timePeriods[1], 140, 190)
+  fill(150)
+  text(timePeriods[2], 140, 230)
+  fill(150)
+  text(timePeriods[3], 140, 270)
+
+  //decade text colour change on selection
+  if(decadeButton = 0){
+    fill(255);
+    text(timePeriods[0], 140, 150)
+  } else if(decadeButton = 1){
+    fill(255)
+    text(timePeriods[1], 140, 190)
+  } else if(decadeButton = 2) {
+    fill(255)
+    text(timePeriods[2], 140, 230)
+  } else{
+    fill(255)
+    text(timePeriods[3], 140, 270)
+  }
+
+  //exact year text
+  fill(255)
+  stroke(255)
+  textSize(50)
+  text(decadeSelection[exactYear], 1200, 800);
 
   translate(width / 2, height / 2);
 
   // outer ring
-  fill(0)
+  fill(0, 0, 0, 0)
   stroke(255);
   strokeWeight(1)
-  circle(0, 0, r * 2);
+  circle(0, 0, r * 2.80);
+
 
   // middle ring
-  fill(0)
+  fill(0, 0, 0, 0)
   stroke(255);
   strokeWeight(1)
   circle(0, 0, r);
 
-  // inner ring
-  fill(0)
-  stroke(255);
-  strokeWeight(1)
-  circle(0, 0, r / 2);
+
 
 
   noStroke();
@@ -141,7 +236,6 @@ function draw() {
   //stroke for circles
   strokeWeight(1);
 
- 
   for (let i = 0; i < 120; i++) {
     fill(lerpColor(coldColour, hotColour, delta[i], a))
     stroke(lerpColor(coldColour, hotColour, delta[i], a))
@@ -150,57 +244,54 @@ function draw() {
     y = sin(theta[i] + rot) * radius[i] + randomGaussian(1, gaussianRandom);
     tx = cos(thetaT[i] + rot) * textRadius[i];
     ty = sin(thetaT[i] + rot) * textRadius[i];
-    // noStroke();
-    // fill(255);
-    //Draw circle
-    circle(x, y, circleSize)
 
+    //Draws points
+    circle(x, y, circleSize)
     ellipse(x, y)
     stroke(0)
     strokeWeight(1)
     fill(225)
-    // rotate((theta[i]) * (PI/2)/6)
-    // rotate(tan(-x/y));
-    // textAlign(CENTER, CENTER)
+
+    //draws months and zero marker
     text(months[i], tx, ty)
     textSize(20)
-    text(tempZero[i], tx / 2, ty / 2 + 5)
+    text(tempDegree[i], tx / 2.8, ty / 2.8)
 
-    // rotate(-(tan(-x/y)));
+    //
     pop();
-    // rotVar = 0;
 
   }
-  for (let i = 0 + (12 * yearDial); i < 12 + (12 * yearDial); i++) {
-    // for (let is = 0 + (10 * year); is < 12 + (10 * year); is++) {
-      // rotate(0)
-  
-      // rotVar = 0.25 * (Math.random() - 0.5);
-      // rot = 0 + rotVar;
-      // let a = 255;
-      let delta = map(averageTemps[i], minTemp, maxTemp, 0, 1)
-      // print(delta)
-      fill(0, 0, 0, 0)
-      // stroke(lerpColor(coldColour, hotColour, delta, 255))
-      // fill (255, 255, 255, 200)
-      stroke (255, 255, 255, 200)
-      // push();
-      x = cos(theta[i] + rot) * radius[i] + randomGaussian(1, gaussianRandom);
-      y = sin(theta[i] + rot) * radius[i] + randomGaussian(1, gaussianRandom);
-      // noStroke();
-      // fill(255);
-      //Draw circle
-      circle(x, y, circleSize)
-      stroke(0)
-      strokeWeight(1)
-      fill(225)
-      // rotate(-(tan(-x/y)));
-      // pop();
-      // rotVar = 0;
-      // print("test")
-    }
 
-  // trot += rotInc;
+  //
+  for (let i = 0; i < 1; i++) {
+    push();
+    tx = cos(thetaT[i] + rot) * textRadius[i];
+    ty = sin(thetaT[i] + rot) * textRadius[i];
+
+    stroke(0)
+    strokeWeight(1)
+    fill(225)
+    textSize(20)
+    text(tempDegree[i], tx / 2.8, ty / 2.8)
+
+    pop();
+  }
+
+  //
+  for (let i = 0 + (12 * yearDial); i < 12 + (12 * yearDial); i++) {
+    fill(0, 0, 0, 0)
+    stroke(255, 255, 255, 200)
+    x = cos(theta[i] + rot) * radius[i] + randomGaussian(1, gaussianRandom);
+    y = sin(theta[i] + rot) * radius[i] + randomGaussian(1, gaussianRandom);
+
+    //Draw circle
+    circle(x, y, circleSize)
+    stroke(0)
+    strokeWeight(1)
+    fill(225)
+
+  }
+
   // once the circle has been rendered, increment the rotation value
   // no need to return rot to zero once TAU has been reached 
   // as the effective value will be the remainder when divided by TAU
@@ -217,6 +308,8 @@ function allCC(e) {
   console.log('controller:', e.controller.number, 'value:', e.value);
   switch (e.controller.number) {
     case 32: {
+      yearDial = Math.trunc(e.value * 9);
+      exactYear = Math.trunc(e.value * 9);
       break;
     }
     case 33: {
@@ -263,6 +356,7 @@ function allCC(e) {
 
 
 /**
+ * All buttons change between four different time perio
  * React to inputs from the bottom buttons on the controller
  * @param {Event} e 
  */
@@ -273,6 +367,7 @@ function allNoteOn(e) {
       if (e.value) {
         //button 1
         decadeButton = 0;
+        decadeSelection = yearEighties;
         calculate();
       } else {
       }
@@ -282,6 +377,7 @@ function allNoteOn(e) {
       if (e.value) {
         //button 2
         decadeButton = 1;
+        decadeSelection = yearNineties;
         calculate();
       } else {
       }
@@ -291,6 +387,7 @@ function allNoteOn(e) {
       if (e.value) {
         //button 3
         decadeButton = 2;
+        decadeSelection = yearNoughties;
         calculate();
       } else {
       }
@@ -300,6 +397,7 @@ function allNoteOn(e) {
       if (e.value) {
         //button 4
         decadeButton = 3;
+        decadeSelection = yearTens;
         calculate();
       } else {
       }
