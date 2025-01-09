@@ -81,8 +81,8 @@ function setup() {
 }
 
 function calculate() {
-  // let decade = decadeButton
-  let decade = 3
+  let decade = decadeButton
+  // let decade = 3
   r = (height * circleDistance)
   textR = height * 0.25
   radius = []
