@@ -73,7 +73,7 @@ function setup() {
 function calculate() {
   let year = yearButton
   r = height * 0.25
-  radius = [] 
+  radius = []
   textRadius = []
   theta = []
   for (let i = (0 + (10 * year)); i < (120 + (10 * year)); i++) {
@@ -184,7 +184,8 @@ function allCC(e) {
     case 38: {
       //slider 3
       //Changes the distribution of circles
-      gaussianRandom = 50 * e.value;
+      //gaussianRandom = 50 * e.value;
+      gaussianRandom = map(e.value, 0, 1, -50, 50);
       break;
     }
     case 39: {
