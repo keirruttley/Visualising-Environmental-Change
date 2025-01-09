@@ -81,9 +81,9 @@ function setup() {
 }
 
 function calculate() {
-  let decade = decadeButton
-  // let decade = 3
-  r = (height * circleDistance)
+  // let decade = decadeButton
+  let decade = 3
+  r = (height * circleDistance) 
   textR = height * 0.25
   radius = []
   textRadius = []
@@ -117,7 +117,7 @@ function draw() {
   fill(0)
   stroke(255);
   strokeWeight(1)
-  circle(0, 0, r * 2);
+  circle(0, 0, (r * 2)+ 25);
 
   // middle ring
   fill(0)
