@@ -31,7 +31,9 @@ let months = [
   "Dec",
 ];
 
-
+let tempZero = [
+  "0°C",
+];
 
 // change opacity
 let a = 255;
@@ -60,9 +62,9 @@ function setup() {
   }
   print(averageTemps)
 
-  minTemp = min(averageTemps)
+  minTemp = min(averageTemps);
   // find the highest value
-  maxTemp = max(averageTemps)
+  maxTemp = max(averageTemps);
   // define 2 colours that will form either end of a range of possible colurs
   hotColour = color(255, 0, 0, a);
   coldColour = color(0, 0, 255, a);
@@ -101,29 +103,41 @@ function draw() {
   text(HEADERTEXT, width / 2, TOPMARGIN / 2);
 
   translate(width / 2, height / 2);
-
+  
+  // outer ring
   fill(0)
   stroke(255);
-  strokeWeight(10)
-  // circle(0, 0, r * 2);
+  strokeWeight(1)
+  circle(0, 0, r * 2);
 
+  // middle ring
+  fill(0)
+  stroke(255);
+  strokeWeight(1)
+  circle(0, 0, r );
 
+  // inner ring
+  fill(0)
+  stroke(255);
+  strokeWeight(1)
+  circle(0, 0, r / 2);
+
+  
   noStroke();
   // coords of each point
   let x, y;
   // how much to advance rotation of the circle by each frame
   let rotInc = circleSpeed;
-  //colour based on temperature
-  fill(lerpColor(coldColour, hotColour, 0.5, a))
 
   //stroke for circles
   strokeWeight(1);
-  // stroke(255);
 
   //Draws circles
   for (let i = 0; i < 120; i++) {
     // rotate(0)
     // rot = 0 + rotVar;
+    let delta = map(averageTemps[i], minTemp, maxTemp, 0,1)
+    print(delta)
     fill(lerpColor(coldColour, hotColour, 0.5, a))
     stroke(lerpColor(coldColour, hotColour, 0.5, a))
     push();
@@ -133,6 +147,7 @@ function draw() {
     ty = sin(theta[i] + rot) * textRadius[i];
     // noStroke();
     // fill(255);
+    //Draw circle
     circle(x, y, circleSize)
 
     ellipse(x, y)
@@ -143,6 +158,9 @@ function draw() {
     // rotate(tan(-x/y));
     // textAlign(CENTER, CENTER)
     text(months[i], tx, ty)
+    textSize(20)
+    text(tempZero[i], tx / 2, ty / 2 + 5)
+
     // rotate(-(tan(-x/y)));
     pop();
     rotVar = 0.25 * (Math.random() - 0.5);
@@ -186,17 +204,15 @@ function allCC(e) {
     }
     case 37: {
       //slider 2
-      //changes size of cirlce
-      //circleSize = 200 * e.value + 10; // + 10 used so circle is always visible
-      circleDistance = 50 * e.value + 0.25;
-      console.log(circleDistance);
+      //changes radius postion of circle
+      circleDistance = 1 * e.value + 0.25;
+      calculate();
       break;
     }
     case 38: {
       //slider 3
       //Changes the distribution of circles
-      //gaussianRandom = 50 * e.value;
-      gaussianRandom = map(e.value, 0, 1, -50, 50);
+      gaussianRandom = 50 * e.value;
       break;
     }
     case 39: {
