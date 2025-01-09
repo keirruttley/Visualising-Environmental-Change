@@ -10,7 +10,9 @@ let minTemp, maxTemp;
 let hotColour, coldColour;
 let vhc = 0;
 // how much to rotate the circle by each frame
-let rot = 0;
+let rotVar = 0;
+let rot = 0 + rotVar;
+let tRot = 0;
 let theta = [];
 let radius = [];
 let textRadius = [];
@@ -75,13 +77,14 @@ function setup() {
 
 function calculate() {
   let year = yearButton
-  r = height * circleDistance;
+  r = (height * circleDistance)
+  textR = height * 0.25
   radius = []
   textRadius = []
   theta = []
   for (let i = (0 + (10 * year)); i < (120 + (10 * year)); i++) {
     radius.push(averageTemps[i] * r)
-    textRadius.push(r + 2)
+    textRadius.push(textR + 2)
     theta.push((2 * Math.PI / 12) * i)
     print(radius)
   }
@@ -120,6 +123,7 @@ function draw() {
   //Draws circles
   for (let i = 0; i < 120; i++) {
     // rotate(0)
+    // rot = 0 + rotVar;
     fill(lerpColor(coldColour, hotColour, 0.5, a))
     stroke(lerpColor(coldColour, hotColour, 0.5, a))
     push();
@@ -141,12 +145,14 @@ function draw() {
     text(months[i], tx, ty)
     // rotate(-(tan(-x/y)));
     pop();
+    rotVar = 0.25 * (Math.random() - 0.5);
   }
 
   // once the circle has been rendered, increment the rotation value
   // no need to return rot to zero once TAU has been reached 
   // as the effective value will be the remainder when divided by TAU
   rot += rotInc;
+  // trot += rotInc;
 }
 
 
