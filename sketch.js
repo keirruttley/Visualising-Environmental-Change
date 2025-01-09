@@ -41,6 +41,9 @@ let gaussianRandom = 0;
 let circleSpeed = 0.0025;
 // year change
 let yearButton = 0;
+// distance of where the circles place is expanded
+let circleDistance = 0.25
+
 
 function preload() {
   table = loadTable("data/data.csv", "csv", "header");
@@ -72,7 +75,7 @@ function setup() {
 
 function calculate() {
   let year = yearButton
-  r = height * 0.25
+  r = height * circleDistance;
   radius = []
   textRadius = []
   theta = []
@@ -178,7 +181,9 @@ function allCC(e) {
     case 37: {
       //slider 2
       //changes size of cirlce
-      circleSize = 200 * e.value + 10; // + 10 used so circle is always visible
+      //circleSize = 200 * e.value + 10; // + 10 used so circle is always visible
+      circleDistance = 50 * e.value + 0.25;
+      console.log(circleDistance);
       break;
     }
     case 38: {
