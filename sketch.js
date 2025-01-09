@@ -185,12 +185,14 @@ function draw() {
   text(timePeriods[2], 140, 230)
   text(timePeriods[3], 140, 270)
   stroke(255)
-  line(40, 165 + (40 * decadeButton), 245, 165 + (40 * decadeButton))
+  strokeWeight(3)
+  line(40, 167 + (40 * decadeButton), 245, 167 + (40 * decadeButton))
 
   //exact year text
   fill(255)
   stroke(255)
   textSize(50)
+  strokeWeight(1)
   text(decadeSelection[exactYear], 1200, 800);
 
   translate(width / 2, height / 2);
