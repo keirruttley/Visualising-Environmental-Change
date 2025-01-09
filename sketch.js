@@ -10,8 +10,8 @@ let minTemp, maxTemp;
 let hotColour, coldColour;
 let vhc = 0;
 // how much to rotate the circle by each frame
-let rotVar = 0;
-let rot = 0 + rotVar;
+// let rotVar = 0;
+let rot = 0;
 let trot = 0;
 let theta = [];
 let thetaT = [];
@@ -64,12 +64,12 @@ function setup() {
   }
   // print(averageTemps)
 
-  minTemp = min(averageTemps);
-  // find the highest value
-  maxTemp = max(averageTemps);
-  // define 2 colours that will form either end of a range of possible colurs
-  hotColour = color(255, 0, 0, a);
-  coldColour = color(0, 0, 255, a);
+  // minTemp = min(averageTemps);
+  // // find the highest value
+  // maxTemp = max(averageTemps);
+  // // define 2 colours that will form either end of a range of possible colurs
+  // hotColour = color(255, 0, 0, a);
+  // coldColour = color(0, 0, 255, a);
   // use squared ends when draing strokes
   strokeCap(SQUARE)
   // centre text
@@ -81,8 +81,9 @@ function setup() {
 }
 
 function calculate() {
+
   // let decade = decadeButton
-  let decade = 3
+  let decade = 1
   r = (height * circleDistance)
   textR = height * 0.25
   radius = []
@@ -92,9 +93,16 @@ function calculate() {
     radius.push(averageTemps[i] * r)
     textRadius.push(textR + (r * 0.15))
     theta.push(((2 * Math.PI / 12) * i) * (0.25 * (Math.random() - 0.5)))
-    thetaT.push(((2 * Math.PI / 12) * i))
+    thetaT.push(((2 * Math.PI / 12) * i)) 
+    minTemp = min(averageTemps);
+    // find the highest value
+    maxTemp = max(averageTemps);
+    // define 2 colours that will form either end of a range of possible colurs
+    hotColour = color(255, 0, 0, a);
+    coldColour = color(0, 0, 255, a);
     // print(radius)
   }
+  draw();
 }
 
 
