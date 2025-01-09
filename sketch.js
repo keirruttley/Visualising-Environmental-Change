@@ -211,7 +211,8 @@ function allCC(e) {
     case 39: {
       //slider 4
       //changes the speed of circles
-      circleSpeed = 0.025 * e.value + 0.0025;
+      // circleSpeed = 0.025 * e.value + 0.0025;
+      circleSpeed = map(e.value, 0, 1, -0.0275, 0.0275);
       break;
     }
   }
