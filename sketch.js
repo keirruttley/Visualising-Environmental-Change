@@ -12,8 +12,9 @@ let vhc = 0;
 // how much to rotate the circle by each frame
 let rotVar = 0;
 let rot = 0 + rotVar;
-let tRot = 0;
+let trot = 0;
 let theta = [];
+let thetaT = [];
 let radius = [];
 let textRadius = [];
 let months = [
@@ -87,8 +88,9 @@ function calculate() {
   for (let i = (0 + (10 * year)); i < (120 + (10 * year)); i++) {
     radius.push(averageTemps[i] * r)
     textRadius.push(textR + 2)
-    theta.push((2 * Math.PI / 12) * i)
-    print(radius)
+    theta.push(((2 * Math.PI / 12) * i)*(0.25 * (Math.random() - 0.5)))
+    thetaT.push(((2 * Math.PI / 12) * i))
+    // print(radius)
   }
 }
 
@@ -135,16 +137,18 @@ function draw() {
   //Draws circles
   for (let i = 0; i < 120; i++) {
     // rotate(0)
+    
+    // rotVar = 0.25 * (Math.random() - 0.5);
     // rot = 0 + rotVar;
     let delta = map(averageTemps[i], minTemp, maxTemp, 0,1)
     print(delta)
-    fill(lerpColor(coldColour, hotColour, 0.5, a))
-    stroke(lerpColor(coldColour, hotColour, 0.5, a))
+    fill(lerpColor(coldColour, hotColour, delta, a))
+    stroke(lerpColor(coldColour, hotColour, delta, a))
     push();
     x = cos(theta[i] + rot) * radius[i] + randomGaussian(1, gaussianRandom);
     y = sin(theta[i] + rot) * radius[i] + randomGaussian(1, gaussianRandom);
-    tx = cos(theta[i] + rot) * textRadius[i];
-    ty = sin(theta[i] + rot) * textRadius[i];
+    tx = cos(thetaT[i] + rot) * textRadius[i];
+    ty = sin(thetaT[i] + rot) * textRadius[i];
     // noStroke();
     // fill(255);
     //Draw circle
@@ -163,14 +167,15 @@ function draw() {
 
     // rotate(-(tan(-x/y)));
     pop();
-    rotVar = 0.25 * (Math.random() - 0.5);
+    // rotVar = 0;
+
   }
 
+  // trot += rotInc;
   // once the circle has been rendered, increment the rotation value
   // no need to return rot to zero once TAU has been reached 
   // as the effective value will be the remainder when divided by TAU
   rot += rotInc;
-  // trot += rotInc;
 }
 
 
