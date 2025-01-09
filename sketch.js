@@ -117,7 +117,7 @@ function draw() {
   fill(0)
   stroke(255);
   strokeWeight(1)
-  circle(0, 0, (r * 2)+ 25);
+  circle(0, 0, r * 2);
 
   // middle ring
   fill(0)
