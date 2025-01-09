@@ -38,7 +38,7 @@ let tempZero = [
 ];
 
 // change opacity
-let a = 100;
+let a = 255;
 //change size
 let circleSize = 10;
 // gaussian
@@ -64,13 +64,12 @@ function setup() {
     }
   }
   // print(averageTemps)
-
-  // minTemp = min(averageTemps);
-  // // find the highest value
-  // maxTemp = max(averageTemps);
-  // // define 2 colours that will form either end of a range of possible colurs
-  // hotColour = color(255, 0, 0, a);
-  // coldColour = color(0, 0, 255, a);
+  minTemp = min(averageTemps);
+  // find the highest value
+  maxTemp = max(averageTemps);
+  // define 2 colours that will form either end of a range of possible colurs
+  hotColour = color(255, 0, 0, a);
+  coldColour = color(0, 0, 255, a);
   // use squared ends when draing strokes
   strokeCap(SQUARE)
   // centre text
@@ -92,11 +91,12 @@ function calculate() {
   for (let i = (0 + (10 * decade)); i < (120 + (10 * decade)); i++) {
     radius.push(averageTemps[i] * r)
     textRadius.push(textR + (r * 0.15))
-    theta.push(((2 * Math.PI / 12) * i) * (0.25 * (Math.random() - 0.5)))
-    thetaT.push(((2 * Math.PI / 12) * i)) 
+    theta.push(((2 * Math.PI / 12) * i) + (0.25 * (Math.random() - 0.5)))
+    thetaT.push(((2 * Math.PI / 12) * i))
     delta.push(map(averageTemps[i], minTemp, maxTemp, 0, 1));
     // print(radius)
   }
+  print(delta)
   draw();
 }
 
@@ -140,42 +140,8 @@ function draw() {
   //stroke for circles
   strokeWeight(1);
 
-  //Draws circles
-  // for (let i = 0 + (10 * 1); i < 10 + (10 * 1); i++) {
-  //   // for (let is = 0 + (10 * year); is < 12 + (10 * year); is++) {
-  //     // rotate(0)
-  
-  //     // rotVar = 0.25 * (Math.random() - 0.5);
-  //     // rot = 0 + rotVar;
-  //     // let a = 255;
-  //     let delta = map(averageTemps[i], minTemp, maxTemp, 0, 1)
-  //     // print(delta)
-  //     fill(lerpColor(coldColour, hotColour, delta, 255))
-  //     // stroke(lerpColor(coldColour, hotColour, delta, 255))
-  //     // fill (255, 255, 255, 200)
-  //     stroke (255, 255, 255, 200)
-  //     // push();
-  //     x = cos(theta[i] + rot) * radius[i] + randomGaussian(1, gaussianRandom);
-  //     y = sin(theta[i] + rot) * radius[i] + randomGaussian(1, gaussianRandom);
-  //     // noStroke();
-  //     // fill(255);
-  //     //Draw circle
-  //     circle(x, y, circleSize)
-  //     stroke(0)
-  //     strokeWeight(1)
-  //     fill(225)
-  //     // rotate(-(tan(-x/y)));
-  //     // pop();
-  //     // rotVar = 0;
-  //     // print("test")
-  //   }
+ 
   for (let i = 0; i < 120; i++) {
-    // rotate(0)
-
-    // rotVar = 0.25 * (Math.random() - 0.5);
-    // rot = 0 + rotVar;
-    
-    // print(delta)
     fill(lerpColor(coldColour, hotColour, delta[i], a))
     stroke(lerpColor(coldColour, hotColour, delta[i], a))
     push();
@@ -213,7 +179,7 @@ function draw() {
       // let a = 255;
       let delta = map(averageTemps[i], minTemp, maxTemp, 0, 1)
       // print(delta)
-      fill(lerpColor(coldColour, hotColour, delta, a))
+      fill(0, 0, 0, 0)
       // stroke(lerpColor(coldColour, hotColour, delta, 255))
       // fill (255, 255, 255, 200)
       stroke (255, 255, 255, 200)
@@ -241,48 +207,6 @@ function draw() {
 
 }
 
-// function selectDraw() {
-  
-//   let yearDial = 0;
-//   textSize(36);
-//   fill(255)
-//   noStroke();
-//   // text(HEADERTEXT, width / 2, TOPMARGIN / 2);
-
-//   translate(width / 2, height / 2);
-//   let x, y;
-//   let rotInc = circleSpeed;
-//   let year = yearDial
-//   for (let is = 0 + (10 * 1); is < 10 + (10 * 1); is++) {
-//   // for (let is = 0 + (10 * year); is < 12 + (10 * year); is++) {
-//     // rotate(0)
-
-//     // rotVar = 0.25 * (Math.random() - 0.5);
-//     // rot = 0 + rotVar;
-//     // let a = 255;
-//     let delta = map(averageTemps[is], minTemp, maxTemp, 0, 1)
-//     // print(delta)
-//     fill(lerpColor(coldColour, hotColour, delta, 255))
-//     stroke(lerpColor(coldColour, hotColour, delta, 255))
-//     // fill (255, 255, 255, 255)
-//     // fill (255, 255, 255, 255)
-//     // push();
-//     x = cos(theta[is] + rot) * radius[is] + randomGaussian(1, gaussianRandom);
-//     y = sin(theta[is] + rot) * radius[is] + randomGaussian(1, gaussianRandom);
-//     // noStroke();
-//     // fill(255);
-//     //Draw circle
-//     circle(x, y, 30)
-//     stroke(0)
-//     strokeWeight(1)
-//     fill(225)
-//     // rotate(-(tan(-x/y)));
-//     // pop();
-//     // rotVar = 0;
-//     print("test")
-//   }
-//   rot += rotInc;
-// }
 
 /**
  * React to inputs from the control change sliders in the Midi controller
