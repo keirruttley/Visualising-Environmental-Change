@@ -4,6 +4,8 @@ https://data.giss.nasa.gov/gistemp/
 */
 const HEADERTEXT = "Annual Global Temperature Fluctuation 1980 - 2019";
 const TOPMARGIN = 52;
+const decadeTimeout = setTimeout(nextDecade, 100000);
+const yearTimeout = setTimeout(nextYear, 10000);
 let averageTemps = [];
 // let currentMonth;
 let minTemp, maxTemp;
@@ -19,6 +21,9 @@ let radius = [];
 let delta = [];
 let textRadius = [];
 let stopDraw = 0;
+
+
+
 let months = [
   "Jan",
   "Feb",
@@ -167,8 +172,6 @@ function calculate() {
   }
 }
 
-
-
 function draw() {
   background(0, 15);
 
@@ -179,7 +182,7 @@ function draw() {
   fill(0)
 
   //time periods text
-  fill (255)
+  fill(255)
   text(timePeriods[0], 140, 150)
   text(timePeriods[1], 140, 190)
   text(timePeriods[2], 140, 230)
@@ -203,15 +206,11 @@ function draw() {
   strokeWeight(1)
   circle(0, 0, r * 2.80);
 
-
   // middle ring
   fill(0, 0, 0, 0)
   stroke(255);
   strokeWeight(1)
   circle(0, 0, r);
-
-
-
 
   noStroke();
   // coords of each point
@@ -245,7 +244,6 @@ function draw() {
 
     //
     pop();
-
   }
 
   //
@@ -264,7 +262,7 @@ function draw() {
   }
 
   //
-  for (let i = 0 + (12 * yearDial); i < 12 + (12 * yearDial); i++) {
+  for (let i = 0 + (12 * (yearDial * mutipleSelect)); i < 12 + (12 * yearDial); i++) {
     fill(0, 0, 0, 0)
     stroke(255, 255, 255, 200)
     x = cos(theta[i] + rot) * radius[i] + randomGaussian(1, gaussianRandom);
@@ -275,16 +273,45 @@ function draw() {
     stroke(0)
     strokeWeight(1)
     fill(225)
-
   }
 
   // once the circle has been rendered, increment the rotation value
   // no need to return rot to zero once TAU has been reached 
   // as the effective value will be the remainder when divided by TAU
   rot += rotInc;
-
 }
 
+function nextDecade() {
+  if (decadeButton < 3) { 
+  decadeButton = (decadeButton + 1);
+  } else if (decadeButton = 3) {
+    decadeButton = (0);
+  }
+  if (decadeSelection = yearTens) {
+    decadeSelection = yearEighties;
+  } else if (decadeSelection = yearNoughties) {
+    decadeSelection = yearTens;
+  } else if (decadeSelection = yearNineties) {
+    decadeSelection = yearNoughties;
+  } else if (decadeSelection = yearEighties) {
+    decadeSelection = yearNineties;
+  }
+  decadeTimeout = setTimeout(nextDecade, 100000);
+}
+
+function nextYear() {
+  if (yearDial < 9) { 
+  yearDial = (yearDial + 1);
+  } else if (yearDial = 9) {
+    yearDial = (0);
+  }
+  if (exactYear < 9) { 
+    exactYear = (exactYear + 1);
+    } else if (exactYear = 9) {
+      exactYear = (0);
+    }
+  yearTimeout = setTimeout(nextYear, 10000);
+}
 
 /**
  * React to inputs from the control change sliders in the Midi controller
@@ -292,6 +319,10 @@ function draw() {
  */
 function allCC(e) {
   console.log('controller:', e.controller.number, 'value:', e.value);
+  clearTimeout(decadeTimeout);
+  clearTimeout(yearTimeout);
+  decadeTimeout = setTimeout(nextDecade, 100000);
+  yearTimeout = setTimeout(nextYear, 10000);
   switch (e.controller.number) {
     case 32: {
       yearDial = Math.trunc(e.value * 9);
@@ -299,6 +330,7 @@ function allCC(e) {
       break;
     }
     case 33: {
+      mutipleSelect = Math.trunc(e.value);
       break;
     }
     case 34: {
@@ -339,8 +371,6 @@ function allCC(e) {
   }
 }
 
-
-
 /**
  * All buttons change between four different time perio
  * React to inputs from the bottom buttons on the controller
@@ -348,6 +378,10 @@ function allCC(e) {
  */
 function allNoteOn(e) {
   console.log('controller:', e.data[1], 'value:', e.value);
+  clearTimeout(decadeTimeout);
+  clearTimeout(yearTimeout);
+  decadeTimeout = setTimeout(nextDecade, 100000);
+  yearTimeout = setTimeout(nextYear, 10000);
   switch (e.data[1]) {
     case 40: {
       if (e.value) {
