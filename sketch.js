@@ -127,6 +127,7 @@ function preload() {
 
 function setup() {
   createCanvas(innerWidth * 0.98, innerHeight * 0.9);
+// sets up single array with all the temp values for all months for years 1980-2019 
   for (let rowI = 0; rowI < 40; rowI++) {
     for (let colI = 0; colI < 12; colI++) {
       averageTemps.push(table.get(rowI, colI));
@@ -160,9 +161,11 @@ function calculate() {
   textRadius = [];
   theta = [];
   delta = [];
+  // calculates the radii and theta values for the text and also the radii and thetas for all months within a set decade determined by the decade variable 
   for (let i = 0 + 120 * decade; i < 120 + 120 * decade; i++) {
     radius.push(averageTemps[i] * r);
     textRadius.push(textR + r * 0.6);
+    //calculates theta with a small random change so the data points are slightly offset from the center of each section 
     theta.push(((2 * Math.PI) / 12) * i + 0.25 * (Math.random() - 0.5));
     thetaT.push(((2 * Math.PI) / 12) * i);
     delta.push(map(averageTemps[i], minTemp, maxTemp, 0, 1));
@@ -171,7 +174,6 @@ function calculate() {
 
 function draw() {
   background(0, 15);
-
   textSize(40);
   fill(255);
   noStroke();
@@ -186,6 +188,7 @@ function draw() {
   text(timePeriods[3], width * 0.15, 300);
   stroke(255);
   strokeWeight(3);
+  //underlines the current decade that the data is showing 
   line(width * 0.121, 172 + 48 * decadeButton, width * 0.179, 172 + 48 * decadeButton);
 
   //exact year text
@@ -193,6 +196,7 @@ function draw() {
   stroke(255);
   textSize(50);
   strokeWeight(1);
+  //changes the text displayed to be the same as the year of data being highlighted
   text(decadeSelection[exactYear], width * 0.8, height * 0.8);
 
   translate(width / 2, height / 2);
@@ -218,17 +222,21 @@ function draw() {
   //stroke for circles
   strokeWeight(1);
 
-  //
+  //draws all the dots for the decades worth of data points by iterating through the arrays of values calculated in the calculate function
   for (let i = 0; i < 120; i++) {
+    //applies correct colour based on the temp value
     fill(lerpColor(coldColour, hotColour, delta[i], a));
     stroke(lerpColor(coldColour, hotColour, delta[i], a));
+    
     push();
+
+    //works out the x and y values for both the data points (x,y) but also for the text (tx,ty)
     x = cos(theta[i] + rot) * radius[i] + randomGaussian(1, gaussianRandom);
     y = sin(theta[i] + rot) * radius[i] + randomGaussian(1, gaussianRandom);
     tx = cos(thetaT[i] + rot) * textRadius[i];
     ty = sin(thetaT[i] + rot) * textRadius[i];
 
-    //Draws points
+    //Draws points using the calculated x and y values
     circle(x, y, 2 * circleSize);
     ellipse(x, y);
     stroke(0);
@@ -240,26 +248,23 @@ function draw() {
     textSize(28);
     text(tempDegree[i], tx / 2.8, ty / 2.8);
 
-    //
     pop();
   }
 
-  //
+  //ensures the 0 label is always possitioned above the data points
   for (let i = 0; i < 1; i++) {
     push();
     tx = cos(thetaT[i] + rot) * textRadius[i];
     ty = sin(thetaT[i] + rot) * textRadius[i];
-
     stroke(0);
     strokeWeight(1);
     fill(225);
     textSize(28);
     text(tempDegree[i], tx / 2.8, ty / 2.8);
-
     pop();
   }
 
-  
+  //highlights the data points for the current selected year
   for (let i = 0 + (12 * (yearDial * multipleSelect)); i < 12 + (12 * yearDial); i++) {
     fill(0, 0, 0, 0);
     stroke(255, 255, 255, 200);
@@ -272,18 +277,12 @@ function draw() {
     strokeWeight(1);
     fill(225);
   }
-
-  // once the circle has been rendered, increment the rotation value
-  // no need to return rot to zero once TAU has been reached
-  // as the effective value will be the remainder when divided by TAU
+//turns the circle every frame
   rot += rotInc;
 }
 
-function compareArrays(a, b) {
 
-}
-
-
+//automatically sets the decade data to the next decades worth of data once the current decade is finished
 function nextDecade() {
   if (decadeButton < 3) { 
   decadeButton = (decadeButton + 1);
@@ -302,12 +301,14 @@ function nextDecade() {
   calculate();
 }
 
+//automatically highlights the next years worth of data and changes the labels for every 10 seconds the midi controller isnt being manipulated
 function nextYear() {
   if (yearDial < 9) { 
   yearDial = (yearDial + 1);
   } else if (yearDial == 9) {
     yearDial = (0);
   }
+  //calls the function to change to the next decade at the end of each decade
   if (exactYear < 9) { 
     exactYear = (exactYear + 1);
     } else if (exactYear == 9) {
