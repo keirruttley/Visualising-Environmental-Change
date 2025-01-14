@@ -21,6 +21,7 @@ let delta = [];
 let textRadius = [];
 let stopDraw = 0;
 let multipleSelect = 1;
+let randomEnable = 0;
 let months = [
   "Jan",
   "Feb",
@@ -231,8 +232,8 @@ function draw() {
     push();
 
     //works out the x and y values for both the data points (x,y) but also for the text (tx,ty)
-    x = cos(theta[i] + rot) * radius[i] + randomGaussian(1, gaussianRandom);
-    y = sin(theta[i] + rot) * radius[i] + randomGaussian(1, gaussianRandom);
+    x = cos(theta[i] + rot) * radius[i] + (randomEnable * (randomGaussian(1, gaussianRandom)));
+    y = sin(theta[i] + rot) * radius[i] + (randomEnable * (randomGaussian(1, gaussianRandom)));
     tx = cos(thetaT[i] + rot) * textRadius[i];
     ty = sin(thetaT[i] + rot) * textRadius[i];
 
@@ -268,8 +269,8 @@ function draw() {
   for (let i = 0 + (12 * (yearDial * multipleSelect)); i < 12 + (12 * yearDial); i++) {
     fill(0, 0, 0, 0);
     stroke(255, 255, 255, 200);
-    x = cos(theta[i] + rot) * radius[i] + randomGaussian(1, gaussianRandom);
-    y = sin(theta[i] + rot) * radius[i] + randomGaussian(1, gaussianRandom);
+    x = cos(theta[i] + rot) * radius[i] + (randomEnable * (randomGaussian(1, gaussianRandom)));
+    y = sin(theta[i] + rot) * radius[i] + (randomEnable * (randomGaussian(1, gaussianRandom)));
 
     //Draw circle
     circle(x, y, 2 * circleSize);
@@ -363,6 +364,11 @@ function allCC(e) {
       //slider 3
       //Changes the distribution of circles
       gaussianRandom = 50 * e.value;
+      if (e.value == 0) {
+        randomEnable = 0;
+      } else {
+        randomEnable = 1;
+      }
       break;
     }
     case 39: {
