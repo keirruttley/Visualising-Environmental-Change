@@ -163,7 +163,7 @@ function calculate() {
   theta = [];
   delta = [];
   // calculates the radii and theta values for the text and also the radii and thetas for all months within a set decade determined by the decade variable 
-  for (let i = 0 + 120 * decade; i < 120 + 120 * decade; i++) {
+  for (let i = 0 + (120 * decade); i < 120 + (120 * decade); i++) {
     radius.push(averageTemps[i] * r);
     textRadius.push(textR + r * 0.6);
     //calculates theta with a small random change so the data points are slightly offset from the center of each section 
